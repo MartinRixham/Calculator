@@ -29,6 +29,8 @@ function Calculator() {
 		]
 		
 	this.input = "";
+
+    this.title = new Click(function() { this.input = ""; });
 	
 	this.text = new Value(function(value) {
 	
