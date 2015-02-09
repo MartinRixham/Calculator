@@ -26,7 +26,35 @@ function Calculator() {
 				new Character(")"),
 				new Character(" / ")
 			]
-		]
+		];
+
+	this.extraCharacters =
+		[
+			[
+				new Character(" ^ "),
+				new Character(" √ "),
+				new Character(" exp("),
+				new Character(" log(")
+			],
+			[
+				new Character(" % "),
+				new Character(" sin("),
+				new Character(" cos("),
+				new Character(" tan(")
+			],
+			[
+				new Character(" \u03C0 "),
+				new Character(" e "),
+				new Character("."),
+				new Character(".")
+			],
+			[
+				new Character("."),
+				new Character("."),
+				new Character("."),
+				new Character(".")
+			]
+		];
 		
 	this.input = "";
 

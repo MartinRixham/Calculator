@@ -3,6 +3,17 @@
   		font-family: Calibri;
 		color: black;
 	}
+
+	a { 
+		color: inherit;
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: inherit;
+		text-decoration: none;
+		cursor: pointer;
+	}
 			
 	.calculator {
 		margin: auto;
@@ -20,6 +31,9 @@
 		height: 3%;
 		font-size: 8vmin;
 		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		user-select: none
 	}
 
 	.text {
@@ -44,6 +58,23 @@
 		width: 96%;
 		height: 96%;
 	}
+
+	.character-grid {
+		display: none;
+		overflow: hidden;
+	}
+
+	.character-grid:target {
+		display: block;
+	}
+
+	.extra-characters {
+		margin: -15px 0 0 0;
+	}
+
+	.normal-characters {
+		margin: 0 0 -8px 0;
+	}
 			
 	.characters > div > div {
 		display: inline-block;
@@ -51,8 +82,28 @@
 		padding: 2%;
 	}
 
+	.character-link {
+		display: inline-block;
+		text-align: center;
+		width: 100%;
+		font-size: 1.5em;
+	}
+
+	.normal-character-link {
+		margin-bottom: -100px;
+	}
+		
+
+	.extra-character-link {
+		-moz-transform: scale(1, -1);
+		-webkit-transform: scale(1, -1);
+		transform: scale(1, -1);
+		margin-top: -8px;
+	}
+
 	.press-button {
 		width: 100%;
+		height: 100%;
 		padding: 20%;
 		font-family: Calibri;
 		font-size: 1em;
