@@ -75,6 +75,20 @@ function Calculator() {
 		this.input = 42;
 	});
 	
+	this.moveUp = new Click(function() {
+	
+		var grid = document.querySelector(".controls .table .grid");
+		
+		grid.className = "grid";
+	});
+	
+	this.moveDown = new Click(function() {
+		
+		var grid = document.querySelector(".controls .table .grid");
+		
+		grid.className = "grid extra";
+	});
+	
 	var self = this;
 	
 	function Character(character) {

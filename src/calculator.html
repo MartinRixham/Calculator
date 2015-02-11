@@ -10,18 +10,18 @@
 	<body>
 ﻿	<div class="calculator">
   	<h1 data-bind="title">Calculator</h1>
-	    <div class="button-table">
+	    <div class="controls">
   			<input type="text" id="text" class="text" data-bind="text" />
-				<div id="characters" class="character-grid">
-  	    	<div class="characters normal-characters" data-bind="characters">
-  	    		<button type="button" class="press-button" data-bind="text"></button>
-  	    	</div>
-					<a class="character-link extra-character-link" href="#extra-characters">^</a>
-				</div>
-				<div id="extra-characters" class="character-grid">
-					<a class="character-link normal-character-link" href="#characters">^</a>
-  	    	<div class="characters extra-characters" data-bind="extraCharacters">
-  	    		<button type="button" class="press-button" data-bind="text"></button>
+				<div class="table">
+					<div class="grid">
+  	    		<div class="characters normal" data-bind="characters">
+  	    			<button type="button" class="press-button" data-bind="text"></button>
+  	    		</div>
+						<a class="character-link extra" data-bind="moveDown">^</a>
+						<a class="character-link normal" data-bind="moveUp">^</a>
+  	    		<div class="characters extra" data-bind="extraCharacters">
+  	    			<button type="button" class="press-button" data-bind="text"></button>
+  	    		</div>
   	    	</div>
 				</div>
   	  </div>
