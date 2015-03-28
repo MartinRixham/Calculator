@@ -72,7 +72,7 @@
 	
 	this.calculate = new Click(function() {
 	
-		this.input = CalcLogic(this.input);
+		this.input = new FormulaTree().RunAll(this.input);
 	});
 	
 	this.moveUp = new Click(function() {

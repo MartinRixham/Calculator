@@ -118,3 +118,8 @@ QUnit.test( "ThreeOperands_Priority2", function( assert ) {
 	assert.equal( 
 		tree.Calculate(), 10.5, "Passed!" );
 });
+QUnit.test( "RunAll", function( assert ) {
+	var tree = new FormulaTree();
+	assert.equal( 
+		tree.RunAll("10 + 8 / 16"), 10.5, "Passed!" );
+});

@@ -34,3 +34,11 @@ FormulaTree.prototype.Append = function(element) {
 		this.iterator = this.root;
 	}
 }
+
+FormulaTree.prototype.RunAll = function(calcStr) {
+	var arrayOfCalc = calcStr.split(" ");
+	for (var i = 0; i < arrayOfCalc.length; i++) {
+		this.Append(arrayOfCalc[i]);
+	}
+	return this.Calculate();
+}
