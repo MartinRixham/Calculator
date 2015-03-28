@@ -1,4 +1,4 @@
-function Calculator() {
+﻿function Calculator() {
 	
 	this.characters = 
 		[
@@ -72,7 +72,7 @@ function Calculator() {
 	
 	this.calculate = new Click(function() {
 	
-		this.input = 42;
+		this.input = CalcLogic(this.input);
 	});
 	
 	this.moveUp = new Click(function() {
