@@ -10,10 +10,12 @@ FormulaTree.prototype.Calculate = function() {
 FormulaTree.prototype.Append = function(element) {
 	if ("(" == element)
 	{
+		this.chunks[this.chunks.length - 1].Check("(");
 		this.chunks.push(new BracketedTree());
 	}
 	else if (")" == element)
 	{
+		this.chunks[this.chunks.length - 1].Check(")");
 		if (this.chunks[this.chunks.length - 2].afterBracket)
 		{
 			this.chunks[this.chunks.length - 1].iterator.SetPriority();

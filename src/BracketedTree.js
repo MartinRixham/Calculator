@@ -5,38 +5,40 @@ var BracketedTree = function() {
 	this.root;
 }
 
+BracketedTree.prototype.Check = function(element) {
+	if (this.afterNum && (!isNaN(element) || "(" == element))
+	{
+		throw "Invalid input string.";
+	}
+	else if (!this.afterNum && (isNaN(element) && "(" != element))
+	{
+		throw "Invalid input string.";
+	}
+}
+
 BracketedTree.prototype.Append = function(element) {
+	this.Check(element);
 	if (this.afterNum) {
-		if (isNaN(element)) {	// +-*/), not(
-			var opObj = new BinaryOperation(element);
-			// smaller number means higher priority
-			if (opObj.GetPriority() < this.iterator.GetPriority())
-			{
-				opObj.AppendFirst(this.iterator.GetSecond());
-				this.root.AppendSecond(opObj);
-				this.iterator = opObj;
-			}
-			else
-			{
-				opObj.AppendFirst(this.iterator);
-				this.iterator = opObj;
-				this.root = this.iterator;
-			}
-			this.afterNum = false;
-		}
-		else 
+		var opObj = new BinaryOperation(element);
+		// smaller number means higher priority
+		if (opObj.GetPriority() < this.iterator.GetPriority())
 		{
-			throw "Invalid input string.";
+			opObj.AppendFirst(this.iterator.GetSecond());
+			this.root.AppendSecond(opObj);
+			this.iterator = opObj;
 		}
+		else
+		{
+			opObj.AppendFirst(this.iterator);
+			this.iterator = opObj;
+			this.root = this.iterator;
+		}
+		this.afterNum = false;
 	}
 	else
 	{
 		var numObj = new Number(element);
-		if (isNaN(element))
-		{
-			throw "Invalid input string.";
-		}
-		else if (this.afterBracket)
+		if (this.afterBracket)
 		{
 			this.iterator = numObj;
 			this.root = numObj;

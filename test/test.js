@@ -154,3 +154,19 @@ QUnit.test( "Bracket3", function( assert ) {
 	assert.equal( 
 		tree.RunAll("( 3 * ( 10 + 1 ) - 22 ) / 2"), 5.5, "Passed!" );
 });
+QUnit.test( "Bracket_Error", function( assert ) {
+	assert.throws( 
+		function() {
+			var tree = new FormulaTree();
+			tree.RunAll("10 (  16 + 2 )");
+		},
+		"Invalid input string.",
+		"( must come after operator or (." );
+	assert.throws( 
+		function() {
+			var tree = new FormulaTree();
+			tree.RunAll("( 10 + ) * 16");
+		},
+		"Invalid input string.",
+		") must come after number or )." );
+});
