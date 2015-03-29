@@ -36,7 +36,11 @@ FormulaTree.prototype.Append = function(element) {
 }
 
 FormulaTree.prototype.RunAll = function(calcStr) {
-	var arrayOfCalc = calcStr.split(" ");
+	var arrayOfCalc = calcStr.replace(/\(/g, " \( ");
+	arrayOfCalc = arrayOfCalc.replace(/\)/g, " \) ");
+	arrayOfCalc = arrayOfCalc.replace(/(\s+)/g, " ");
+	arrayOfCalc = arrayOfCalc.replace(/(^\s+)|(\s+$)/g, "");
+	arrayOfCalc = arrayOfCalc.split(" ");
 	for (var i = 0; i < arrayOfCalc.length; i++) {
 		this.Append(arrayOfCalc[i]);
 	}

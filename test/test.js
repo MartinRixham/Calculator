@@ -139,12 +139,12 @@ QUnit.test( "Operator_NextTo_Operator", function( assert ) {
 		"Invalid input string.",
 		"Element next to number must be a operator." );
 });
-QUnit.test( "Bracket", function( assert ) {
+QUnit.test( "Bracket_Beginning", function( assert ) {
 	var tree = new FormulaTree();
 	assert.equal( 
 		tree.RunAll("( 10 + 14 ) / 16"), 1.5, "Passed!" );
 });
-QUnit.test( "Bracket2", function( assert ) {
+QUnit.test( "Bracket_End", function( assert ) {
 	var tree = new FormulaTree();
 	assert.equal( 
 		tree.RunAll("3 * ( 10 + 14 )"), 72, "Passed!" );
@@ -153,6 +153,16 @@ QUnit.test( "Bracket3", function( assert ) {
 	var tree = new FormulaTree();
 	assert.equal( 
 		tree.RunAll("( 3 * ( 10 + 1 ) - 22 ) / 2"), 5.5, "Passed!" );
+});
+QUnit.test( "Bracket4", function( assert ) {
+	var tree = new FormulaTree();
+	assert.equal( 
+		tree.RunAll("( 3 + 6 ) * 5 - 7 / ( 2 + 2 )"), 43.25, "Passed!" );
+});
+QUnit.test( "Bracket_AribitrarySpace", function( assert ) {
+	var tree = new FormulaTree();
+	assert.equal( 
+		tree.RunAll("(3 + 6  ) * 5 - 7 /(2 + 2 ) "), 43.25, "Passed!" );
 });
 QUnit.test( "Bracket_Error", function( assert ) {
 	assert.throws( 
@@ -174,3 +184,4 @@ QUnit.test( "Bracket_Error", function( assert ) {
 // treatment of ()
 // continuous space
 // unexpected character
+// unequal number of ( and )
