@@ -40,15 +40,26 @@ BracketedTree.prototype.Append = function(element) {
 		var numObj = new Number(element);
 		if (this.afterBracket)
 		{
-			this.iterator = numObj;
-			this.root = numObj;
-			this.afterBracket = false;
+			this.SetFirstObject(numObj);
 		}
 		else 
 		{
-			this.iterator.AppendSecond(numObj);
-			this.iterator = this.root;
+			this.CreateCompleteTree(numObj);
 		}
 		this.afterNum = true;
 	}
 }
+
+BracketedTree.prototype.SetFirstObject = function(obj) {
+	this.iterator = obj;
+	this.root = obj;
+	this.afterBracket = false;
+	this.afterNum = true;
+}
+
+BracketedTree.prototype.CreateCompleteTree = function(obj) {
+	this.iterator.AppendSecond(obj);
+	this.iterator = this.root;
+	this.afterNum = true;
+}
+

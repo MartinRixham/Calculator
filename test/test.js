@@ -170,3 +170,7 @@ QUnit.test( "Bracket_Error", function( assert ) {
 		"Invalid input string.",
 		") must come after number or )." );
 });
+// - 5 as -5
+// treatment of ()
+// continuous space
+// unexpected character

@@ -19,20 +19,14 @@ FormulaTree.prototype.Append = function(element) {
 		if (this.chunks[this.chunks.length - 2].afterBracket)
 		{
 			this.chunks[this.chunks.length - 1].iterator.SetPriority();
-			this.chunks[this.chunks.length - 2].iterator
-			= this.chunks[this.chunks.length - 1].iterator;
-			this.chunks[this.chunks.length - 2].root
-			= this.chunks[this.chunks.length - 1].iterator;
+			this.chunks[this.chunks.length - 2].SetFirstObject(
+				this.chunks[this.chunks.length - 1].iterator);
 		}
 		else
 		{
-			this.chunks[this.chunks.length - 2].iterator.AppendSecond(
+			this.chunks[this.chunks.length - 2].CreateCompleteTree(
 				this.chunks[this.chunks.length - 1].iterator);
-			this.chunks[this.chunks.length - 2].iterator 
-			= this.chunks[this.chunks.length - 2].root;
 		}
-		this.chunks[this.chunks.length - 2].afterBracket = false;
-		this.chunks[this.chunks.length - 2].afterNum = true;
 		this.chunks.pop();
 	}
 	else
