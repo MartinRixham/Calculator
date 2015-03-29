@@ -1,37 +1,41 @@
 var FormulaTree = function() {
-	var initialNum = new Number("0");
-	var initialOp = new Formula("+");
-	initialOp.AppendFirst(initialNum);
-	this.iterator = initialOp;
-	this.root = initialOp;
+	this.chunks = [];
+	this.chunks.push(new BracketedTree());
 }
 
 FormulaTree.prototype.Calculate = function() {
-	return this.iterator.Calculate();
+	return this.chunks[0].iterator.Calculate();
 }
 
 FormulaTree.prototype.Append = function(element) {
-	if (isNaN(element))
+	if ("(" == element)
 	{
-		var opObj = new Formula(element);
-		// smaller number means higher priority
-		if (opObj.GetPriority() < this.iterator.GetPriority())
+		this.chunks.push(new BracketedTree());
+	}
+	else if (")" == element)
+	{
+		if (this.chunks[this.chunks.length - 2].afterBracket)
 		{
-			opObj.AppendFirst(this.iterator.GetSecond());
-			this.root.AppendSecond(opObj);
-			this.iterator = opObj;
+			this.chunks[this.chunks.length - 1].iterator.SetPriority();
+			this.chunks[this.chunks.length - 2].iterator
+			= this.chunks[this.chunks.length - 1].iterator;
+			this.chunks[this.chunks.length - 2].root
+			= this.chunks[this.chunks.length - 1].iterator;
 		}
 		else
 		{
-			opObj.AppendFirst(this.iterator);
-			this.iterator = opObj;
-			this.root = this.iterator;
+			this.chunks[this.chunks.length - 2].iterator.AppendSecond(
+				this.chunks[this.chunks.length - 1].iterator);
+			this.chunks[this.chunks.length - 2].iterator 
+			= this.chunks[this.chunks.length - 2].root;
 		}
+		this.chunks[this.chunks.length - 2].afterBracket = false;
+		this.chunks[this.chunks.length - 2].afterNum = true;
+		this.chunks.pop();
 	}
-	else {
-		var numObj = new Number(element);
-		this.iterator.AppendSecond(numObj);
-		this.iterator = this.root;
+	else
+	{
+		this.chunks[this.chunks.length - 1].Append(element);
 	}
 }
 

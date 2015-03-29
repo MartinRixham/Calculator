@@ -5,3 +5,10 @@ var Number = function(numStr) {
 Number.prototype.Calculate = function() {
 	return this.value;
 }
+
+Number.prototype.SetPriority = function() {
+}
+
+Number.prototype.GetPriority = function() {
+	return 0;
+}

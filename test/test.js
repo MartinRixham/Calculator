@@ -31,7 +31,7 @@ QUnit.test( "Number", function( assert ) {
 		28, new Number("28").Calculate(), "Passed!" );
 });
 QUnit.test( "Formula_Add", function( assert ) {
-	var eqn = new Formula("+");
+	var eqn = new BinaryOperation("+");
 	var left = new Number("11");
 	eqn.AppendFirst(left);
 	var right = new Number("7");
@@ -48,7 +48,7 @@ QUnit.test( "FormulaTree_Add", function( assert ) {
 		tree.Calculate(), 16, "Passed!" );
 });
 QUnit.test( "Formula_Subtract", function( assert ) {
-	var eqn = new Formula("-");
+	var eqn = new BinaryOperation("-");
 	var left = new Number("11");
 	eqn.AppendFirst(left);
 	var right = new Number("7");
@@ -57,7 +57,7 @@ QUnit.test( "Formula_Subtract", function( assert ) {
 		eqn.Calculate(), 4, "Passed!" );
 });
 QUnit.test( "Formula_Multiply", function( assert ) {
-	var eqn = new Formula("*");
+	var eqn = new BinaryOperation("*");
 	var left = new Number("11");
 	eqn.AppendFirst(left);
 	var right = new Number("7");
@@ -66,7 +66,7 @@ QUnit.test( "Formula_Multiply", function( assert ) {
 		eqn.Calculate(), 77, "Passed!" );
 });
 QUnit.test( "Formula_Divide", function( assert ) {
-	var eqn = new Formula("/");
+	var eqn = new BinaryOperation("/");
 	var left = new Number("12");
 	eqn.AppendFirst(left);
 	var right = new Number("8");
@@ -76,8 +76,8 @@ QUnit.test( "Formula_Divide", function( assert ) {
 });
 QUnit.test( "ThreeOperands", function( assert ) {
 	// 10 * 3 - 8
-	var operator1 = new Formula("*");
-	var operator2 = new Formula("-");
+	var operator1 = new BinaryOperation("*");
+	var operator2 = new BinaryOperation("-");
 	var num1 = new Number("10");
 	operator1.AppendFirst(num1);
 	var num2 = new Number("3");
@@ -122,4 +122,35 @@ QUnit.test( "RunAll", function( assert ) {
 	var tree = new FormulaTree();
 	assert.equal( 
 		tree.RunAll("10 + 8 / 16"), 10.5, "Passed!" );
+});
+QUnit.test( "Operator_NextTo_Operator", function( assert ) {
+	assert.throws( 
+		function() {
+			var tree = new FormulaTree();
+			tree.RunAll("10 + - 16");
+		},
+		"Invalid input string.",
+		"Element next to operator must be a number." );
+	assert.throws( 
+		function() {
+			var tree = new FormulaTree();
+			tree.RunAll("10 + 16 5");
+		},
+		"Invalid input string.",
+		"Element next to number must be a operator." );
+});
+QUnit.test( "Bracket", function( assert ) {
+	var tree = new FormulaTree();
+	assert.equal( 
+		tree.RunAll("( 10 + 14 ) / 16"), 1.5, "Passed!" );
+});
+QUnit.test( "Bracket2", function( assert ) {
+	var tree = new FormulaTree();
+	assert.equal( 
+		tree.RunAll("3 * ( 10 + 14 )"), 72, "Passed!" );
+});
+QUnit.test( "Bracket3", function( assert ) {
+	var tree = new FormulaTree();
+	assert.equal( 
+		tree.RunAll("( 3 * ( 10 + 1 ) - 22 ) / 2"), 5.5, "Passed!" );
 });
