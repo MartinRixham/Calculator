@@ -185,3 +185,37 @@ QUnit.test( "Bracket_Error", function( assert ) {
 // continuous space
 // unexpected character
 // unequal number of ( and )
+QUnit.test( "Spaces_Adding", function( assert ) {
+	assert.equal( 
+		new FormulaTree().RunAll("1 + 3"), new FormulaTree().RunAll("1+3"), "Passed!" );
+});
+
+QUnit.test( "Spaces_Multiply", function( assert ) {
+	assert.equal( 
+		new FormulaTree().RunAll("1 * 3"), new FormulaTree().RunAll("1*3"), "Passed!" );
+});
+QUnit.test( "Spaces_Brackets", function( assert ) {
+	assert.equal( 
+		new FormulaTree().RunAll(" 2 *  ( 1 + 3  ) "), new FormulaTree().RunAll("2*(1+3)"), "Passed!" );
+});
+QUnit.test( "Tokenizing_SimpleWithSpaces", function( assert ) {
+    var y = "1 + 1";
+    var regex = /[+\-*\/()]|[0-9]+(\.[0-9]+)?/g; 
+    var s = "";
+    var match = y.match(regex);
+	assert.equal( match.length, 3, "Passed!");
+});
+QUnit.test( "Tokenizing_SimpleNoSpaces", function( assert ) {
+    var y = "1+1";
+    var regex = /[+\-*\/()]|([0-9]+(\.[0-9]+)?)+/g; 
+    var s = "";
+    var match = y.match(regex);
+	assert.equal( match.length, 3, "Passed!");
+});
+QUnit.test( "Tokenizing_complex", function( assert ) {
+    var y = "1 + 3 * (4 - 5) + 2/4 + 1.3";
+    var regex = /[+\-*\/()]|([0-9]+(\.[0-9]+)?)+/g; 
+    var s = "";
+    var match = y.match(regex);
+	assert.equal( match.length, 15, "Passed!");
+});
