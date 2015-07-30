@@ -4,27 +4,27 @@ QUnit.test( "hello test", function( assert ) {
 QUnit.test( "Calculate", function( assert ) {
 num = 22;
 assert.equal( 
-	num, CalcLogic("22"), "Passed!" );
+	num, new FormulaTree().RunAll("22"), "Passed!" );
 });
 QUnit.test( "Add", function( assert ) {
 assert.equal( 
-	2, CalcLogic("1 + 1"), "Passed!" );
+	2, new FormulaTree().RunAll("1 + 1"), "Passed!" );
 });
 QUnit.test( "Subtract", function( assert ) {
 assert.equal( 
-	3, CalcLogic("10 - 7"), "Passed!" );
+	3, new FormulaTree().RunAll("10 - 7"), "Passed!" );
 });
 QUnit.test( "Multiply", function( assert ) {
 assert.equal( 
-	70, CalcLogic("10 * 7"), "Passed!" );
+	70, new FormulaTree().RunAll("10 * 7"), "Passed!" );
 });
 QUnit.test( "Divide", function( assert ) {
 assert.equal( 
-	4, CalcLogic("24 / 6"), "Passed!" );
+	4, new FormulaTree().RunAll("24 / 6"), "Passed!" );
 });
 QUnit.test( "ThreeNumbers", function( assert ) {
 assert.equal( 
-	33, CalcLogic("34 - 3 + 2"), "Passed!" );
+	33, new FormulaTree().RunAll("34 - 3 + 2"), "Passed!" );
 });
 QUnit.test( "Number", function( assert ) {
 	assert.equal( 
