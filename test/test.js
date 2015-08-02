@@ -4,27 +4,27 @@ QUnit.test( "hello test", function( assert ) {
 QUnit.test( "Calculate", function( assert ) {
 num = 22;
 assert.equal( 
-	num, CalcLogic("22"), "Passed!" );
+	num, new FormulaTree().RunAll("22"), "Passed!" );
 });
 QUnit.test( "Add", function( assert ) {
 assert.equal( 
-	2, CalcLogic("1 + 1"), "Passed!" );
+	2, new FormulaTree().RunAll("1 + 1"), "Passed!" );
 });
 QUnit.test( "Subtract", function( assert ) {
 assert.equal( 
-	3, CalcLogic("10 - 7"), "Passed!" );
+	3, new FormulaTree().RunAll("10 - 7"), "Passed!" );
 });
 QUnit.test( "Multiply", function( assert ) {
 assert.equal( 
-	70, CalcLogic("10 * 7"), "Passed!" );
+	70, new FormulaTree().RunAll("10 * 7"), "Passed!" );
 });
 QUnit.test( "Divide", function( assert ) {
 assert.equal( 
-	4, CalcLogic("24 / 6"), "Passed!" );
+	4, new FormulaTree().RunAll("24 / 6"), "Passed!" );
 });
 QUnit.test( "ThreeNumbers", function( assert ) {
 assert.equal( 
-	33, CalcLogic("34 - 3 + 2"), "Passed!" );
+	33, new FormulaTree().RunAll("34 - 3 + 2"), "Passed!" );
 });
 QUnit.test( "Number", function( assert ) {
 	assert.equal( 
@@ -129,14 +129,14 @@ QUnit.test( "Operator_NextTo_Operator", function( assert ) {
 			var tree = new FormulaTree();
 			tree.RunAll("10 + - 16");
 		},
-		"Invalid input string.",
+		/^Invalid input string/,
 		"Element next to operator must be a number." );
 	assert.throws( 
 		function() {
 			var tree = new FormulaTree();
 			tree.RunAll("10 + 16 5");
 		},
-		"Invalid input string.",
+		/^Invalid input string/,
 		"Element next to number must be a operator." );
 });
 QUnit.test( "Bracket_Beginning", function( assert ) {
@@ -170,18 +170,45 @@ QUnit.test( "Bracket_Error", function( assert ) {
 			var tree = new FormulaTree();
 			tree.RunAll("10 (  16 + 2 )");
 		},
-		"Invalid input string.",
+		/^Invalid input string/,
 		"( must come after operator or (." );
 	assert.throws( 
 		function() {
 			var tree = new FormulaTree();
 			tree.RunAll("( 10 + ) * 16");
 		},
-		"Invalid input string.",
+		/^Invalid input string/,
 		") must come after number or )." );
 });
+// TODO: 
 // - 5 as -5
 // treatment of ()
 // continuous space
 // unexpected character
 // unequal number of ( and )
+QUnit.test( "SpacesAreInsignificant_Adding", function( assert ) {
+	assert.equal( 
+		new FormulaTree().RunAll("1 + 3"), new FormulaTree().RunAll("1+3"), "Passed!" );
+});
+
+QUnit.test( "SpacesAreInsignificant_Multiply", function( assert ) {
+	assert.equal( 
+		new FormulaTree().RunAll("1 * 3"), new FormulaTree().RunAll("1*3"), "Passed!" );
+});
+QUnit.test( "SpacesAreInsignificant_Brackets", function( assert ) {
+	assert.equal( 
+		new FormulaTree().RunAll(" 2 *  ( 1 + 3  ) "), new FormulaTree().RunAll("2*(1+3)"), "Passed!" );
+});
+QUnit.test( "Tokenizing_SimpleWithSpaces", function( assert ) {
+    assert.equal(
+        new FormulaTree().TokenizeInput("1 + 1").length, 3, "Passed!");
+});
+QUnit.test( "Tokenizing_SimpleNoSpaces", function( assert ) {
+    assert.equal(
+        new FormulaTree().TokenizeInput("1+1").length, 3, "Passed!");
+});
+QUnit.test( "Tokenizing_complex", function( assert ) {
+    assert.equal(
+        new FormulaTree().TokenizeInput("1 + 3 * ((4 - 5) + 2/4) + 1.3").length, 
+        17, "Passed!");
+});

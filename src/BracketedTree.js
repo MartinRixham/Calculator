@@ -8,11 +8,11 @@ var BracketedTree = function() {
 BracketedTree.prototype.Check = function(element) {
 	if (this.afterNum && (!isNaN(element) || "(" == element))
 	{
-		throw "Invalid input string.";
+		throw "Invalid input string: '" + element + "' found after a number";
 	}
 	else if (!this.afterNum && (isNaN(element) && "(" != element))
 	{
-		throw "Invalid input string.";
+		throw "Invalid input string: '" + element + "' found with no preceding number";
 	}
 }
 

@@ -108,7 +108,7 @@
 	var height = grid.offsetHeight;
 
 	// The scale factor is empirically determined to make the calculator
-	// the right height to contain the positioned button grid accross browsers.
+	// the right height to contain the positioned button grid across browsers.
 	document.querySelector(".calculator").style.height = 3 * height - 362 + "px";
 }
 
