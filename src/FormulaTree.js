@@ -35,11 +35,30 @@ FormulaTree.prototype.Append = function(element) {
 	}
 }
 
-FormulaTree.prototype.RunAll = function(calcStr) {
-	var arrayOfCalc = calcStr.match( /[+\-*\/()]|([0-9]+(\.[0-9]+)?)+/g);  
+FormulaTree.prototype.TokenizeInput = function(calcStr) {    
+    // Regex to split the given input string into separate 'tokens', where 
+    // each token is a number, operator or bracket:
+    // 
+    //  [+\-*/()]           # any one of the symbols +-*/()
+    //                      # note that '-' must be escaped with \
+    //  |                   # or
+    //  (
+    //      [0-9]+          # one or more numerals
+    //      (\.[0-9]+)?     # optional decimal point and one or more numerals
+    //  )
+    // 
+    // TODO: change to treat invalid chars appropriately. Currently 
+    //       it ignores any other characters, e.g. 
+    //          '1 + 1' = 'a1 + 1x!'
+	var arrayOfTokens = calcStr.match( /[+\-*/()]|([0-9]+(\.[0-9]+)?)/g);  
+    return arrayOfTokens;
+}
 
-	for (var i = 0; i < arrayOfCalc.length; i++) {
-		this.Append(arrayOfCalc[i]);
+FormulaTree.prototype.RunAll = function(calcStr) {
+	var tokens = this.TokenizeInput(calcStr);
+
+	for (var i = 0; i < tokens.length; i++) {
+		this.Append(tokens[i]);
 	}
 	return this.Calculate();
 }

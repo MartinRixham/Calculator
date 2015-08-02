@@ -129,14 +129,14 @@ QUnit.test( "Operator_NextTo_Operator", function( assert ) {
 			var tree = new FormulaTree();
 			tree.RunAll("10 + - 16");
 		},
-		"Invalid input string.",
+		/^Invalid input string/,
 		"Element next to operator must be a number." );
 	assert.throws( 
 		function() {
 			var tree = new FormulaTree();
 			tree.RunAll("10 + 16 5");
 		},
-		"Invalid input string.",
+		/^Invalid input string/,
 		"Element next to number must be a operator." );
 });
 QUnit.test( "Bracket_Beginning", function( assert ) {
@@ -170,52 +170,45 @@ QUnit.test( "Bracket_Error", function( assert ) {
 			var tree = new FormulaTree();
 			tree.RunAll("10 (  16 + 2 )");
 		},
-		"Invalid input string.",
+		/^Invalid input string/,
 		"( must come after operator or (." );
 	assert.throws( 
 		function() {
 			var tree = new FormulaTree();
 			tree.RunAll("( 10 + ) * 16");
 		},
-		"Invalid input string.",
+		/^Invalid input string/,
 		") must come after number or )." );
 });
+// TODO: 
 // - 5 as -5
 // treatment of ()
 // continuous space
 // unexpected character
 // unequal number of ( and )
-QUnit.test( "Spaces_Adding", function( assert ) {
+QUnit.test( "SpacesAreInsignificant_Adding", function( assert ) {
 	assert.equal( 
 		new FormulaTree().RunAll("1 + 3"), new FormulaTree().RunAll("1+3"), "Passed!" );
 });
 
-QUnit.test( "Spaces_Multiply", function( assert ) {
+QUnit.test( "SpacesAreInsignificant_Multiply", function( assert ) {
 	assert.equal( 
 		new FormulaTree().RunAll("1 * 3"), new FormulaTree().RunAll("1*3"), "Passed!" );
 });
-QUnit.test( "Spaces_Brackets", function( assert ) {
+QUnit.test( "SpacesAreInsignificant_Brackets", function( assert ) {
 	assert.equal( 
 		new FormulaTree().RunAll(" 2 *  ( 1 + 3  ) "), new FormulaTree().RunAll("2*(1+3)"), "Passed!" );
 });
 QUnit.test( "Tokenizing_SimpleWithSpaces", function( assert ) {
-    var y = "1 + 1";
-    var regex = /[+\-*\/()]|[0-9]+(\.[0-9]+)?/g; 
-    var s = "";
-    var match = y.match(regex);
-	assert.equal( match.length, 3, "Passed!");
+    assert.equal(
+        new FormulaTree().TokenizeInput("1 + 1").length, 3, "Passed!");
 });
 QUnit.test( "Tokenizing_SimpleNoSpaces", function( assert ) {
-    var y = "1+1";
-    var regex = /[+\-*\/()]|([0-9]+(\.[0-9]+)?)+/g; 
-    var s = "";
-    var match = y.match(regex);
-	assert.equal( match.length, 3, "Passed!");
+    assert.equal(
+        new FormulaTree().TokenizeInput("1+1").length, 3, "Passed!");
 });
 QUnit.test( "Tokenizing_complex", function( assert ) {
-    var y = "1 + 3 * (4 - 5) + 2/4 + 1.3";
-    var regex = /[+\-*\/()]|([0-9]+(\.[0-9]+)?)+/g; 
-    var s = "";
-    var match = y.match(regex);
-	assert.equal( match.length, 15, "Passed!");
+    assert.equal(
+        new FormulaTree().TokenizeInput("1 + 3 * ((4 - 5) + 2/4) + 1.3").length, 
+        17, "Passed!");
 });
